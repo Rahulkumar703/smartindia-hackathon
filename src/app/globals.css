@@ -3,25 +3,54 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --primary: #0099ff;
+  --secondary: #FF9228;
+  --background: #ebeef3;
+  --color: #121212;
+  --white: #f8fbff;
+  --black: #090909;
+
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --background: #1f1f1f;
+    --color: #f2f6f8;
   }
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  color: var(--color);
+  background: var(--background)
+}
+
+
+
+input:focus,
+a:focus,
+button:focus {
+  outline-offset: .2rem;
+  outline: solid 1.5px var(--secondary);
+  accent-color: var(--primary);
+}
+
+input {
+  background: var(--background);
+  backdrop-filter: blur(4px);
+  color: var(--text);
+  border: 1px solid var(--primary);
+}
+
+input:disabled {
+  background: var(--bg);
+  border: 1px solid var(--text);
+  color: var(--text);
+}
+
+
+
+.toast_container {
+  margin-top: 5rem;
+  font-size: 1.25rem;
+  line-height: 1.5rem;
 }
