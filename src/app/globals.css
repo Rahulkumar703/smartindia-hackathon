@@ -28,20 +28,23 @@ body {
 
 input:focus,
 a:focus,
-button:focus {
+button:focus,
+textarea:focus {
   outline-offset: .2rem;
   outline: solid 1.5px var(--secondary);
   accent-color: var(--primary);
 }
 
-input {
+input,
+textarea {
   background: var(--background);
   backdrop-filter: blur(4px);
   color: var(--text);
   border: 1px solid var(--primary);
 }
 
-input:disabled {
+input:disabled,
+textarea:disabled {
   background: var(--bg);
   border: 1px solid var(--text);
   color: var(--text);

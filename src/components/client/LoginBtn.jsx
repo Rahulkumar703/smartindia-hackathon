@@ -1,12 +1,37 @@
 "use client"
 import Link from 'next/link'
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { BiSolidChevronDown } from 'react-icons/bi'
 import { IoMdDoneAll } from 'react-icons/io'
 import { PiBuildingsBold, PiStudentBold } from 'react-icons/pi'
+import { usePathname, useRouter } from 'next/navigation';
+import UserContext from '@/contexts/UserContext'
+import { FiLogOut } from 'react-icons/fi'
+import { toast } from 'react-toastify'
 const LoginBtn = () => {
+
+    const { user, setUser } = useContext(UserContext);
+    const router = useRouter();
     const [expanded, setExpanded] = useState(false);
     const parentRef = useRef();
+    const pathname = usePathname();
+
+    const logout = async () => {
+        try {
+            const res = await fetch('/api/auth/logout');
+            const data = await res.json();
+
+            toast[data.type](data.message);
+            if (data.success) {
+                setUser({ id: null, email: null, userType: '' });
+                router.replace('/');
+            }
+
+        } catch (error) {
+            toast.error(error.message);
+        }
+
+    }
 
     useEffect(() => {
 
@@ -21,16 +46,26 @@ const LoginBtn = () => {
         }
     })
 
+    if ((pathname.includes('/login') || pathname.includes('/signup'))) return null;
+
     return (
         <div className='relative flex gap-2' ref={parentRef}>
             <Link href="/verify" className='flex gap-2 items-center justify-center bg-primary px-4 py-2 rounded-md text-sm text-white'>
                 <IoMdDoneAll />
                 Verify
             </Link>
-            <button className='flex gap-1 items-center justify-center bg-secondary px-4 py-2 rounded-md text-sm text-white' onClick={() => setExpanded(prev => !prev)}>
-                Login
-                <BiSolidChevronDown />
-            </button>
+            {
+                user.id ?
+                    <button className='flex gap-1 items-center justify-center bg-secondary px-4 py-2 rounded-md text-sm text-white' onClick={logout}>
+                        <FiLogOut />
+                        Logout
+                    </button>
+                    :
+                    <button className='flex gap-1 items-center justify-center bg-secondary px-4 py-2 rounded-md text-sm text-white' onClick={() => setExpanded(prev => !prev)}>
+                        Login
+                        <BiSolidChevronDown />
+                    </button>
+            }
 
             {
                 expanded ?

@@ -23,22 +23,22 @@ const SignupPage = () => {
         const confirmPassword = e.currentTarget.confirmPassword.value;
 
         if (!firstName || !lastName || !email || phone == 0 || !password) {
-            return toast.error('please fill all details.', { toastId: 'emptyFields' })
+            return toast.error('Please fill all details.', { toastId: 'emptyFields' })
         }
         if (password !== confirmPassword) {
-            return toast.error('password not matched', { toastId: 'passwordNotMatched' })
+            return toast.error('Password not matched', { toastId: 'passwordNotMatched' })
         }
 
         try {
             setLoading(true);
-            const res = await fetch('/api/auth/signup', {
+            const res = await fetch('/api/auth/student/signup', {
                 method: 'POST',
                 body: JSON.stringify({ firstName, lastName, email, phone, password })
             })
 
             const data = await res.json();
             if (data.success) {
-                router.push('/login');
+                router.push('/student/login');
             }
             toast[data.type](data.message);
 

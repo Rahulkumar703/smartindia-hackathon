@@ -1,8 +1,9 @@
 "use client"
 import Input from "@/components/client/Input";
+import UserContext from "@/contexts/UserContext";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FiLogIn } from "react-icons/fi";
 import { ImSpinner } from "react-icons/im";
 import { toast } from "react-toastify";
@@ -12,7 +13,7 @@ const LoginPage = () => {
 
     const [loading, setLoading] = useState(false);
     const router = useRouter();
-    // const { setUser } = useContext(UserContext);
+    const { setUser } = useContext(UserContext);
 
     const login = async (e) => {
         e.preventDefault();
@@ -21,24 +22,27 @@ const LoginPage = () => {
         const rememberMe = e.currentTarget.rememberMe.checked;
 
         if (!email || !password) {
-            return toast.error('please fill all details.', { toastId: 'emptyFields' })
+            return toast.error('Please fill all details.', { toastId: 'emptyFields' })
         }
 
         try {
             setLoading(true);
-            const res = await fetch('/api/auth/login', {
+            const res = await fetch('/api/auth/student/login', {
                 method: 'POST',
                 body: JSON.stringify({ email, password, rememberMe })
             })
 
             const data = await res.json();
+            console.log(data);
+
             if (data.success) {
-                // setUser({ id: data?.user?._id, name: data?.user?.firstName })
-                router.push('/');
+                setUser({ id: data.user.id, name: data.user.name })
+                router.push('/student/dashboard');
             }
             toast[data.type](data.message);
 
         } catch (error) {
+            console.log(error);
             toast.error(error.message);
         }
         finally {
@@ -73,7 +77,7 @@ const LoginPage = () => {
                         }
                     </button>
                     <label className='flex gap-1 flex-wrap sm:justify-start justify-center'>
-                        don't have an account ?
+                        don&apos;t have an account ?
                         <Link href='/student/signup' className='text-blue-700 hover:underline'>create account</Link>
                     </label>
                 </div>

@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import { BiLink } from 'react-icons/bi'
+import G20 from './G20'
 
 const Footer = () => {
     return (
@@ -10,10 +11,11 @@ const Footer = () => {
                 <div className="flex justify-between w-full">
                     <div className="flex flex-col gap-1">
                         <div className="flex items-center gap-2 text-white">
-                            <Image src='/ashoka.png' alt='ashoka logo' width={50} height={50} className='w-6' />
-                            <div className="text-left flex flex-col gap-0 justify-center">
-                                <h1 className='text-md font-bold'>Centralized Ceritificates</h1>
-                                <h2 className='text-xs text-slate-400'>Ministry of Education, Government of india</h2>
+                            {/* <Image src='/ashoka.png' alt='ashoka logo' width={50} height={50} className='w-6' /> */}
+                            <div className="text-left flex flex gap-1 items-center justify-center">
+                                <h1 className='text-md font-bold'>BlockCertify</h1>
+                                <G20 className='w-16 h-auto' />
+                                {/* <h2 className='text-xs text-slate-400'>Ministry of Education, Government of india</h2> */}
                             </div>
                         </div>
                         <p className="max-w-xs text-white text-xs">Digital Locker system other organization will validate certificate. Use opensource software and blockchain technology.</p>
@@ -34,7 +36,7 @@ const Footer = () => {
                             <BiLink size={30} className='fill-primary' />
                             Blockchain
                         </div>
-                        <p className='max-w-xs'>A distributed database or ledger shared among a computer network's nodes</p>
+                        <p className='max-w-xs'>A distributed database or ledger shared among a computer network&apos;s nodes</p>
                     </div>
                 </div>
                 <div className="py-3 border border-transparent border-t-slate-600">
