@@ -40,7 +40,7 @@ export async function POST(req) {
 
             // ============= Creating the JWT Token =============
 
-            const token = await signJWT({ id: user._id, email: user.email }, EXPIRATION_TIME);
+            const token = await signJWT({ id: user._id, name: user.firstName }, EXPIRATION_TIME);
 
             // ============= Creating the JWT Token =============
 

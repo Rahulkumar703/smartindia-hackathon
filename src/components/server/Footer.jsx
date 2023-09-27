@@ -12,7 +12,7 @@ const Footer = () => {
                     <div className="flex flex-col gap-1">
                         <div className="flex items-center gap-2 text-white">
                             {/* <Image src='/ashoka.png' alt='ashoka logo' width={50} height={50} className='w-6' /> */}
-                            <div className="text-left flex flex gap-1 items-center justify-center">
+                            <div className="text-left flex gap-1 items-center justify-center">
                                 <h1 className='text-md font-bold'>BlockCertify</h1>
                                 <G20 className='w-16 h-auto' />
                                 {/* <h2 className='text-xs text-slate-400'>Ministry of Education, Government of india</h2> */}
