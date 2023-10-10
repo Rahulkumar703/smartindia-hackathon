@@ -2,14 +2,24 @@
 import { NextResponse } from "next/server";
 import dbConnect from '@/lib/dbConnect'
 import Orgnisation from "@/models/Orgnisation";
+import { writeFile } from "fs/promises";
+import path from "path";
 
 dbConnect()
 
 export async function POST(req) {
     try {
 
-        const reqBody = await req.json();
-        const { name, address, email, phone, password } = reqBody;
+        const reqBody = await req.formData();
+        // Create an object to store the destructured values
+        const formValues = {};
+
+        for (const [key, value] of reqBody.entries()) {
+            formValues[key] = value;
+        }
+
+        // Destructure the values individually
+        const { name, email, address, phone, logo, password } = formValues;
 
 
         // ============= Check if User Exist =============
@@ -26,7 +36,17 @@ export async function POST(req) {
 
 
         // ============= Inserting the User =============
-        const newOrgnisation = await Orgnisation.create({ name, address, email, phone, password });
+
+        const byteData = await logo.arrayBuffer();
+        const buffer = Buffer.from(byteData);
+        const fileExtension = logo.name.split('.')[logo.name.split('.').length - 1];
+        const fileName = `${name}_logo_${new Date().getMilliseconds()}.${fileExtension}`
+        const logoPath = `./public/${name}_logo_${new Date().getMilliseconds()}.${fileExtension}`;
+
+        await writeFile(logoPath, buffer);
+
+        const newOrgnisation = await Orgnisation.create({ name, address, email, phone, logo: `/${fileName}`, password });
+
         // ============= Inserting the User =============
 
         return NextResponse.json(

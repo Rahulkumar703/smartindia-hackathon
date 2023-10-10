@@ -15,7 +15,8 @@ const SignupPage = () => {
         name: '',
         email: '',
         phone: '',
-        addres: '',
+        address: '',
+        logo: '',
         password: '',
         confirmPassword: '',
     })
@@ -23,9 +24,9 @@ const SignupPage = () => {
     const signUp = async (e) => {
         e.preventDefault();
 
-        const { name, email, address, phone, password, confirmPassword } = form;
+        const { name, email, address, phone, logo, password, confirmPassword } = form;
 
-        if (!name || !address || !email || phone == 0 || !password) {
+        if (!name || !address || !email || phone == 0 || !password || !logo) {
             return toast.error('please fill all details.', { toastId: 'emptyFields' })
         }
         if (password !== confirmPassword) {
@@ -34,9 +35,16 @@ const SignupPage = () => {
 
         try {
             setLoading(true);
+            const signupForm = new FormData();
+
+            for (const key in form) {
+                if (key !== 'confirmPassword')
+                    signupForm.append(key, form[key]);
+            }
+
             const res = await fetch('/api/auth/orgnisation/signup', {
                 method: 'POST',
-                body: JSON.stringify({ name, email, address, phone, password })
+                body: signupForm
             })
 
             const data = await res.json();

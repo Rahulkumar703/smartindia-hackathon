@@ -5,7 +5,12 @@ import { ImSpinner } from 'react-icons/im'
 const MultiStepForm = ({ step, setStep, form, setForm, loading }) => {
 
     const handleChange = (e) => {
-        setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
+        if (e.target.type === 'file') {
+            const selectedFile = e.target.files[0];
+            setForm(prev => ({ ...prev, [e.target.name]: selectedFile }));
+        } else {
+            setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
+        }
     }
 
     switch (step) {
@@ -83,6 +88,23 @@ const MultiStepForm = ({ step, setStep, form, setForm, loading }) => {
                             Mobile no
                         </label>
                     </div>
+                    <div className={`w-full flex flex-col-reverse gap-1`}>
+                        <input
+                            className='peer rounded-md backdrop-blur-md text-text-500 py-2 px-2 border resize-none'
+                            name="logo"
+                            id="logo"
+                            type='file'
+                            accept='image/png, image/jpg, image/jpeg'
+                            autoFocus={true}
+                            autoComplete='logo'
+                            // value={form.logo}
+                            disabled={loading}
+                            onChange={handleChange}
+                        />
+                        <label htmlFor='logo' className='text-text-300 peer-focus:text-primary-500 '>
+                            Upload logo
+                        </label>
+                    </div>
                     <div className="flex gap-2">
                         <div className={`w-full flex flex-col-reverse gap-1`}>
                             <input
@@ -96,7 +118,7 @@ const MultiStepForm = ({ step, setStep, form, setForm, loading }) => {
                                 value={form.password}
                                 onChange={handleChange}
                             />
-                            <label htmlFor='email' className='text-text-300 peer-focus:text-primary-500 '>
+                            <label htmlFor='password' className='text-text-300 peer-focus:text-primary-500 '>
                                 Password
                             </label>
                         </div>

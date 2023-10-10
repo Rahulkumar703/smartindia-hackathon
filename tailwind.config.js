@@ -14,6 +14,7 @@ module.exports = {
         black: 'var(--black)',
         primary: 'var(--primary)',
         secondary: 'var(--secondary)',
+        danger: 'var(--danger)',
       },
     },
   },

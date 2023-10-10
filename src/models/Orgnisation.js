@@ -27,11 +27,48 @@ const OrgnisationSchema = new mongoose.Schema({
         trim: true,
         unique: true,
     },
+    logo: {
+        type: String,
+        required: [true, "logo is required"],
+        trim: true,
+    },
     password: {
         type: String,
         required: [true, "Please set a Password"],
         select: false
-    }
+    },
+    templates: [
+        {
+            name: {
+                type: String,
+                required: [true, 'Please Provide Template Name']
+            },
+            url: {
+                type: String,
+                required: [true, 'Please Provide Field Name']
+            },
+            fields: [
+                {
+                    name: {
+                        type: String,
+                        required: [true, 'Please Provide Field Name']
+                    },
+                    x: {
+                        type: Number,
+                        default: 0
+                    },
+                    y: {
+                        type: Number,
+                        default: 0
+                    },
+                    size: {
+                        type: Number,
+                        default: 20
+                    },
+                }
+            ]
+        }
+    ]
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });
 
 

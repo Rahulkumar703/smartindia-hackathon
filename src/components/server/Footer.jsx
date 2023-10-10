@@ -6,15 +6,17 @@ import G20 from './G20'
 
 const Footer = () => {
     return (
-        <footer className='w-full bg-slate-800 text-white text-xs py-6 pt-10'>
+        <footer className='w-full bg-slate-800 text-white text-xs py-6 pt-10 relative z-50'>
             <div className="w-full max-w-6xl flex flex-col justify-between mx-auto gap-2">
                 <div className="flex justify-between w-full">
                     <div className="flex flex-col gap-1">
                         <div className="flex items-center gap-2 text-white">
-                            {/* <Image src='/ashoka.png' alt='ashoka logo' width={50} height={50} className='w-6' /> */}
-                            <div className="text-left flex gap-1 items-center justify-center">
-                                <h1 className='text-md font-bold'>BlockCertify</h1>
-                                <G20 className='w-16 h-auto' />
+                            <Image src='/ashoka.png' alt='ashoka logo' width={50} height={50} className='w-6' />
+                            <div className="text-left flex flex-col gap-1 items-left justify-center">
+                                <div className="flex items-center gap-2">
+                                    <h1 className='text-md font-bold'>BlockCertify</h1>
+                                    <G20 className='w-16 h-auto' />
+                                </div>
                                 {/* <h2 className='text-xs text-slate-400'>Ministry of Education, Government of india</h2> */}
                             </div>
                         </div>

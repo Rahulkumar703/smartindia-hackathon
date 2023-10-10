@@ -2,7 +2,7 @@
 import { useParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
-import { FiArrowLeft, FiLoader, FiSearch } from 'react-icons/fi';
+import { FiLoader, } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 
 

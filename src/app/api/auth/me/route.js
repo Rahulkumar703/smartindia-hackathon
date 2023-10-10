@@ -1,6 +1,5 @@
 import dbConnect from '@/lib/dbConnect';
 import verifyJWT from "@/lib/verifyJWT";
-import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server';
 
 dbConnect()
@@ -10,15 +9,9 @@ export async function GET(req) {
     try {
         const token = req.cookies.get('auth')?.value;
 
-        if (!token)
-            return NextResponse.json(
-                { message: 'unAuthenticated', type: "error", success: false },
-                { status: 401 }
-            )
-
         const payload = await verifyJWT(token);
         return NextResponse.json(
-            { message: 'authenticated', type: "success", success: true, user: { id: payload.id, name: payload.name } },
+            { message: 'authenticated', type: "success", success: true, user: { id: payload.id, name: payload.name, logo: payload?.logo } },
             { status: 200 }
         )
 

@@ -13,6 +13,7 @@ export async function POST(req) {
         const { email, password, rememberMe } = reqBody;
 
         const EXPIRATION_TIME = rememberMe ? '7d' : '1d';
+        console.log(EXPIRATION_TIME);
 
         // ============= Check if Orgnisation Exist =============
 
@@ -40,7 +41,7 @@ export async function POST(req) {
 
             // ============= Creating the JWT Token =============
 
-            const token = await signJWT({ id: orgnisation._id, enmail: orgnisation.email }, EXPIRATION_TIME);
+            const token = await signJWT({ id: orgnisation._id, email: orgnisation.email, logo: orgnisation.logo }, EXPIRATION_TIME);
 
             // ============= Creating the JWT Token =============
 
@@ -56,7 +57,7 @@ export async function POST(req) {
             // ============= Updating Token in DB =============
 
             const response = NextResponse.json(
-                { message: "login successfull", type: "success", success: true, user: { id: orgnisation._id, name: orgnisation.name } },
+                { message: "login successfull", type: "success", success: true, user: { id: orgnisation._id, name: orgnisation.name, logo: orgnisation.logo } },
                 { status: 200 }
             )
 
