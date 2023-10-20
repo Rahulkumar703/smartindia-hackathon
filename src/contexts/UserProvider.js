@@ -15,7 +15,6 @@ function UserProvider({ children }) {
             const res = await fetch('/api/auth/me');
             const data = await res.json();
             if (data.success) {
-                console.log(data);
                 setUser(data.user);
             }
         } catch (error) {

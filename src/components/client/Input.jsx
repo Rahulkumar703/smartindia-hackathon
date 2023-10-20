@@ -11,7 +11,7 @@ const Input = (props) => {
                 name={name}
                 autoComplete={autocomplete}
                 autoFocus={autofocus}
-                className={`peer rounded-md backdrop-blur-md text-text-500 py-2 px-2 border ${className}`}
+                className={`peer rounded-md backdrop-blur-md text-text-500 py-3 text-lg px-2 border ${className}`}
             />
             <label htmlFor={name} className='text-text-300 peer-focus:text-primary-500'>
                 {label}

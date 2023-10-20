@@ -4,6 +4,7 @@ import dbConnect from '@/lib/dbConnect'
 import Orgnisation from "@/models/Orgnisation";
 import { writeFile } from "fs/promises";
 import path from "path";
+import { mkdir } from "fs/promises";
 
 dbConnect()
 
@@ -41,11 +42,13 @@ export async function POST(req) {
         const buffer = Buffer.from(byteData);
         const fileExtension = logo.name.split('.')[logo.name.split('.').length - 1];
         const fileName = `${name}_logo_${new Date().getMilliseconds()}.${fileExtension}`
-        const logoPath = `./public/${name}_logo_${new Date().getMilliseconds()}.${fileExtension}`;
+        const directoryPath = `./public/profile`;
+        const logoPath = `${directoryPath}/${fileName}`;
 
+        await mkdir(directoryPath, { recursive: true });
         await writeFile(logoPath, buffer);
 
-        const newOrgnisation = await Orgnisation.create({ name, address, email, phone, logo: `/${fileName}`, password });
+        const newOrgnisation = await Orgnisation.create({ name, address, email, phone, logo: `/profile/${fileName}`, password });
 
         // ============= Inserting the User =============
 

@@ -22,7 +22,20 @@ function fileToArrayBuffer(file) {
 
 export const renderCertificateTemplate = async (templateState) => {
 
-    const pdfBuffer = await fileToArrayBuffer(templateState.pdfFile);
+    let pdfBuffer;
+    if (templateState.hasOwnProperty('pdfFile')) {
+        pdfBuffer = await fileToArrayBuffer(templateState.pdfFile);
+    }
+    else if (templateState.url) {
+        try {
+            const res = await fetch(templateState.url);
+            pdfBuffer = await res.arrayBuffer();
+
+        } catch (error) {
+            console.log(error);
+            throw new Error(error.message)
+        }
+    }
 
     let pdfDoc = await PDFDocument.load(pdfBuffer)
     pdfDoc.registerFontkit(fontkit)
@@ -39,42 +52,20 @@ export const renderCertificateTemplate = async (templateState) => {
         const textWidth = font.widthOfTextAtSize(String(field.value), Number(field.size));
         const textHeight = font.sizeAtHeight(Number(field.size));
 
+        const hexToRgb = field.color
+            .match(/[A-Za-z0-9]{2}/g)
+            .map(function (v) { return Math.round(parseInt(v, 16) / 255 * 100) / 100 })
+
+
         pages[0].drawText(String(field.value), {
             x: centerX ? (pageWidth / 2) - textWidth / 2 : Number(field.x),
             y: centerY ? (pageHeight / 2) - textHeight / 2 : Number(field.y),
             size: Number(field.size),
             font: font,
-            color: rgb(0, 0, 0),
-            opacity: 1
+            color: rgb(hexToRgb[0], hexToRgb[1], hexToRgb[2]),
+            opacity: Number(field.opacity)
         })
     })
-
-    // pages[0].drawText(String(id), {
-    //     x: 220,
-    //     y: 50.5,
-    //     size: 13,
-    //     font: idFont,
-    //     color: rgb(0, 0, 0),
-    //     opacity: 1
-    // })
-
-    // pages[0].drawText(String(name).toUpperCase(), {
-    //     x: 50,
-    //     y: 342,
-    //     size: 30,
-    //     font: font,
-    //     color: rgb(0, 0, 0)
-    // })
-
-    // let width = font.widthOfTextAtSize(name.toUpperCase(), 30);
-
-    // pages[0].drawLine({
-    //     start: { x: 48, y: 337 },
-    //     end: { x: 55 + width, y: 337 },
-    //     thickness: 2.5,
-    //     color: rgb(0, 0, 0),
-    //     opacity: .8,
-    // })
 
     const certificate = await pdfDoc.save();
     const bytes = new Uint8Array(certificate);

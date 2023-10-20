@@ -63,7 +63,23 @@ const OrgnisationSchema = new mongoose.Schema({
                     },
                     size: {
                         type: Number,
-                        default: 20
+                        default: 38
+                    },
+                    opacity: {
+                        type: Number,
+                        default: 1
+                    },
+                    color: {
+                        type: String,
+                        default: '#000000'
+                    },
+                    centerX: {
+                        type: Boolean,
+                        default: false
+                    },
+                    centerY: {
+                        type: Boolean,
+                        default: false
                     },
                 }
             ]

@@ -36,7 +36,7 @@ const LoginPage = () => {
             console.log(data);
 
             if (data.success) {
-                setUser({ id: data.user.id, name: data.user.name })
+                setUser({ id: data.user.id, name: data.user.name, userType: 'stu' })
                 router.push('/student/dashboard');
             }
             toast[data.type](data.message);

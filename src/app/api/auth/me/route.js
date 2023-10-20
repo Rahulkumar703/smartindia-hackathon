@@ -11,7 +11,7 @@ export async function GET(req) {
 
         const payload = await verifyJWT(token);
         return NextResponse.json(
-            { message: 'authenticated', type: "success", success: true, user: { id: payload.id, name: payload.name, logo: payload?.logo } },
+            { message: 'authenticated', type: "success", success: true, user: { id: payload.id, name: payload.name, logo: payload?.logo, userType: payload.userType } },
             { status: 200 }
         )
 

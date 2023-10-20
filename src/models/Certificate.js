@@ -7,11 +7,15 @@ const CertificateSchema = new mongoose.Schema({
         trim: true,
         ref: 'organisation'
     },
-    studentName: {
-        type: String,
-        required: [true, "student is required"],
+    templateId: {
+        type: mongoose.Schema.ObjectId,
+        required: [true, "template is required"],
         trim: true,
-        lowercase: true
+        ref: 'organisation.template'
+    },
+    certificateInfo: {
+        type: Object,
+        required: [true, "certificateInfo is required"],
     },
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });
 

@@ -51,6 +51,20 @@ textarea:disabled {
   color: var(--text);
 }
 
+canvas,
+.react-pdf__Page {
+  position: relative;
+  width: 100% !important;
+  height: inherit !important;
+}
+
+.react-pdf__Page__textContent {
+  display: none !important;
+}
+
+.react-pdf__Page__annotations {
+  display: none !important;
+}
 
 
 .toast_container {
